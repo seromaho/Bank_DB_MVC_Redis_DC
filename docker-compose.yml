@@ -9,6 +9,7 @@ services:
     container_name: bank_db_mvc
     depends_on:
       - database
+      - cache
 
   database:
     image: mcr.microsoft.com/mssql/server
@@ -18,3 +19,9 @@ services:
       SA_PASSWORD: "P@ssw0rd"
     ports:
       - "4030:1433"
+
+  cache:
+    image: redis
+    container_name: bank_db_cache
+    ports:
+      - "6379:6379"

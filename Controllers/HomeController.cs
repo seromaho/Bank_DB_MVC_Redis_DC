@@ -1,6 +1,7 @@
 ﻿using Bank_DB_MVC_Redis_DC.Data.Bank_DB;
 using Bank_DB_MVC_Redis_DC.Models;
 using Bank_DB_MVC_Redis_DC.Models.Bank_DB;
+using Bank_DB_MVC_Redis_DC;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -10,6 +11,7 @@ using System.IO;
 using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Caching.Distributed;
 
 namespace Bank_DB_MVC_Redis_DC.Controllers
 {
@@ -17,11 +19,14 @@ namespace Bank_DB_MVC_Redis_DC.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly Bank_DB_Context _context;
+        private readonly IDistributedCache _distributedCache;
+        private Bank_Tabelle[] Query;
 
-        public HomeController(ILogger<HomeController> logger, Bank_DB_Context context)
+        public HomeController(ILogger<HomeController> logger, Bank_DB_Context context, IDistributedCache distributedCache)
         {
             _logger = logger;
             _context = context;
+            _distributedCache = distributedCache;
         }
 
         public IActionResult Index()
@@ -29,42 +34,62 @@ namespace Bank_DB_MVC_Redis_DC.Controllers
             return View();
         }
 
-        public IActionResult Seed()
+        public async Task<IActionResult> SeedAsync()
         {
-            var Banken = from Blztabelle in _context.Bank_Tabelle select Blztabelle;
+            Query = null;
 
-            if (Banken.Count() == 0)
+            string recordKey = "Query_" + DateTime.Now.ToString("yyyyMMdd_hh");
+
+            Query = await _distributedCache.GetRecordAsync<Bank_Tabelle[]>(recordKey);
+
+            if (Query is null)
             {
-                FileStream streamREADER0 = new FileStream(@"Data\Bank_DB\Bank_Tabelle-w-o-PK.json", FileMode.OpenOrCreate);
-                StreamReader streamREADER1 = new StreamReader(streamREADER0);
+                var Banken = from Blztabelle in _context.Bank_Tabelle select Blztabelle;
 
-                IEnumerable<Bank_Tabelle> blztabelle = JsonSerializer.Deserialize<IEnumerable<Bank_Tabelle>>(streamREADER1.ReadToEnd());
-
-                streamREADER1.Close();
-                streamREADER0.Close();
-
-                using (_context)
+                if (Banken.Count() == 0)
                 {
-                    foreach (Bank_Tabelle entry in blztabelle)
+                    FileStream streamREADER0 = new FileStream(@"Data\Bank_DB\Bank_Tabelle-w-o-PK.json", FileMode.OpenOrCreate);
+                    StreamReader streamREADER1 = new StreamReader(streamREADER0);
+
+                    IEnumerable<Bank_Tabelle> blztabelle = JsonSerializer.Deserialize<IEnumerable<Bank_Tabelle>>(streamREADER1.ReadToEnd());
+
+                    streamREADER1.Close();
+                    streamREADER0.Close();
+
+                    using (_context)
                     {
-                        _context.Add(entry);
+                        foreach (Bank_Tabelle entry in blztabelle)
+                        {
+                            _context.Add(entry);
+                        }
+
+                        // doesn't work with Entity Framework Core ???
+                        //_context.Database.ExecuteSqlRaw(@"SET IDENTITY_INSERT [Bank_Tabelle] ON");
+
+                        _context.SaveChanges();
+
+                        // doesn't work with Entity Framework Core ???
+                        //_context.Database.ExecuteSqlRaw(@"SET IDENTITY_INSERT [Bank_Tabelle] OFF");
                     }
 
-                    // doesn't work with Entity Framework Core ???
-                    //_context.Database.ExecuteSqlRaw(@"SET IDENTITY_INSERT [Bank_Tabelle] ON");
+                    ViewBag.blztabelle = blztabelle.ToList();
+                    Query = blztabelle.ToArray();
 
-                    _context.SaveChanges();
-
-                    // doesn't work with Entity Framework Core ???
-                    //_context.Database.ExecuteSqlRaw(@"SET IDENTITY_INSERT [Bank_Tabelle] OFF");
+                    await _distributedCache.SetRecordAsync(recordKey, Query);
                 }
 
-                ViewBag.blztabelle = blztabelle.ToList();
+                else
+                {
+                    ViewBag.blztabelle = Banken.ToList();
+                    Query = Banken.ToArray();
+
+                    await _distributedCache.SetRecordAsync(recordKey, Query);
+                }
             }
 
             else
             {
-                ViewBag.blztabelle = Banken.ToList();
+                ViewBag.blztabelle = Query;
             }
 
             return View();

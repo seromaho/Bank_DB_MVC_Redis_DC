@@ -26,6 +26,11 @@ namespace Bank_DB_MVC_Redis_DC
         {
             services.AddControllersWithViews();
             services.AddDbContext<Bank_DB_Context>(options => options.UseSqlServer(Configuration.GetConnectionString("Bank_DB")));
+            services.AddStackExchangeRedisCache(options =>
+            {
+                options.Configuration = Configuration.GetConnectionString("Bank_DB_Cache");
+                options.InstanceName = "Bank_DB_Cache_";
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
