@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  bank_db_mvc_redis_dc:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - "80"

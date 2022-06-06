@@ -1,0 +1,28 @@
+﻿@{
+    ViewData["Title"] = "Resultset";
+}
+
+<table>
+
+    <tr>
+        <th>Bezeichnung</th>
+        <th>Postleitzahl</th>
+        <th>Ort</th>
+        <th>Bankleitzahl</th>
+        <th>BIC</th>
+        <th>Kurzbezeichnung</th>
+    </tr>
+
+    @foreach (Bank_DB_MVC_Redis_DC.Models.Bank_DB.Bank_Tabelle bank in ViewBag.blztabelle)
+    {
+        <tr onmouseover="style.backgroundColor = '#4d0000'" onmouseout="style.backgroundColor = document.body.style.backgroundColor">
+            <td>@bank.Bezeichnung</td>
+            <td>@bank.PLZ</td>
+            <td>@bank.Ort</td>
+            <td>@bank.BLZ</td>
+            <td>@bank.BIC</td>
+            <td>@bank.Kurzbezeichnung</td>
+        </tr>
+    }
+
+</table>

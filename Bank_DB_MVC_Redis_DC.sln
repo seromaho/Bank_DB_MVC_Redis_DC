@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.32510.428
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bank_DB_MVC_Redis_DC", "Bank_DB_MVC_Redis_DC.csproj", "{226F7FD1-54B3-4049-B08E-11CFCF2AAB1A}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{11BBFC7E-B344-4726-A70A-47B8A20C77FC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{226F7FD1-54B3-4049-B08E-11CFCF2AAB1A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{226F7FD1-54B3-4049-B08E-11CFCF2AAB1A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{226F7FD1-54B3-4049-B08E-11CFCF2AAB1A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{226F7FD1-54B3-4049-B08E-11CFCF2AAB1A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{11BBFC7E-B344-4726-A70A-47B8A20C77FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{11BBFC7E-B344-4726-A70A-47B8A20C77FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{11BBFC7E-B344-4726-A70A-47B8A20C77FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{11BBFC7E-B344-4726-A70A-47B8A20C77FC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7C67B42D-9A2F-4F75-8EAD-88772F9F2359}
+	EndGlobalSection
+EndGlobal

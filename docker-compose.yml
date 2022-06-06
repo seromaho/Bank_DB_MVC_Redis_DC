@@ -1,0 +1,20 @@
+version: '3.4'
+
+services:
+  bank_db_mvc_redis_dc:
+    image: ${DOCKER_REGISTRY-}bankdbmvcredisdc
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: bank_db_mvc
+    depends_on:
+      - database
+
+  database:
+    image: mcr.microsoft.com/mssql/server
+    container_name: bank_db
+    environment:
+      ACCEPT_EULA: "Y"
+      SA_PASSWORD: "P@ssw0rd"
+    ports:
+      - "4030:1433"
