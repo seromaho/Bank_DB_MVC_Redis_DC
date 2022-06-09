@@ -15,22 +15,22 @@ using Microsoft.Extensions.Caching.Distributed;
 
 namespace Bank_DB_MVC_Redis_DC.Controllers
 {
-    public class HomeController : Controller
+    public class DatabaseController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly ILogger<DatabaseController> _logger;
         private readonly Bank_DB_Context _context;
         private readonly IDistributedCache _distributedCache;
         private Bank_Tabelle[] _query;
         //private string _recordKey;
 
-        public HomeController(ILogger<HomeController> logger, Bank_DB_Context context, IDistributedCache distributedCache)
+        public DatabaseController(ILogger<DatabaseController> logger, Bank_DB_Context context, IDistributedCache distributedCache)
         {
             _logger = logger;
             _context = context;
             _distributedCache = distributedCache;
         }
 
-        public async Task<IActionResult> IndexAsync()
+        public async Task<IActionResult> QueryPageAsync()
         {
             _query = null;
 

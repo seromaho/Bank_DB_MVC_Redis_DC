@@ -42,7 +42,7 @@ namespace Bank_DB_MVC_Redis_DC
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
+                app.UseExceptionHandler("/Database/Error");
             }
             app.UseStaticFiles();
 
@@ -54,7 +54,7 @@ namespace Bank_DB_MVC_Redis_DC
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Database}/{action=QueryPage}/{id?}");
             });
         }
     }
