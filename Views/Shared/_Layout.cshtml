@@ -27,6 +27,9 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Database" asp-action="Privacy">Privacy</a>
                         </li>
+                        <li>
+                            <span class="nav-link text-dark">@ViewBag.DataSource</span>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -44,7 +47,8 @@
             <a asp-area="" asp-controller="Database" asp-action="Database">View Database</a> -
             <a asp-area="" asp-controller="Database" asp-action="QueryPage">Query Database</a> -
             <a asp-area="" asp-controller="Database" asp-action="Seed">Seed Database</a> -
-            <a asp-area="" asp-controller="Database" asp-action="Privacy">Privacy</a>
+            <a asp-area="" asp-controller="Database" asp-action="Privacy">Privacy</a> -
+            <span>@ViewBag.DataSource</span>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

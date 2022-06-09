@@ -22,6 +22,8 @@ namespace Bank_DB_MVC_Redis_DC.Controllers
         private readonly IDistributedCache _distributedCache;
         private Bank_Tabelle[] _query;
         //private string _recordKey;
+        private string _databaseSource = "data fetched from database";
+        private string _distributedCacheSource = "data fetched from distributed cache";
 
         public DatabaseController(ILogger<DatabaseController> logger, Bank_DB_Context context, IDistributedCache distributedCache)
         {
@@ -71,6 +73,7 @@ namespace Bank_DB_MVC_Redis_DC.Controllers
                     }
 
                     //ViewBag.QueryResult = jsonData.ToList();
+                    //ViewBag.DataSource = _databaseSource;
                     _query = jsonData.ToArray();
 
                     await _distributedCache.SetRecordAsync(recordKey, _query);
@@ -79,6 +82,7 @@ namespace Bank_DB_MVC_Redis_DC.Controllers
                 else
                 {
                     //ViewBag.QueryResult = queryResult.ToList();
+                    //ViewBag.DataSource = _databaseSource;
                     _query = queryResult.ToArray();
 
                     await _distributedCache.SetRecordAsync(recordKey, _query);
@@ -88,6 +92,7 @@ namespace Bank_DB_MVC_Redis_DC.Controllers
             else
             {
                 //ViewBag.QueryResult = _query;
+                //ViewBag.DataSource = _distributedCacheSource;
             }
 
             return View();
@@ -134,6 +139,7 @@ namespace Bank_DB_MVC_Redis_DC.Controllers
                     }
 
                     ViewBag.QueryResult = jsonData.ToList();
+                    ViewBag.DataSource = _databaseSource;
                     _query = jsonData.ToArray();
 
                     await _distributedCache.SetRecordAsync(recordKey, _query);
@@ -142,6 +148,7 @@ namespace Bank_DB_MVC_Redis_DC.Controllers
                 else
                 {
                     ViewBag.QueryResult = queryResult.ToList();
+                    ViewBag.DataSource = _databaseSource;
                     _query = queryResult.ToArray();
 
                     await _distributedCache.SetRecordAsync(recordKey, _query);
@@ -151,6 +158,7 @@ namespace Bank_DB_MVC_Redis_DC.Controllers
             else
             {
                 ViewBag.QueryResult = _query;
+                ViewBag.DataSource = _distributedCacheSource;
             }
 
             return View();
@@ -197,6 +205,7 @@ namespace Bank_DB_MVC_Redis_DC.Controllers
                     }
 
                     ViewBag.QueryResult = jsonData.ToList();
+                    ViewBag.DataSource = _databaseSource;
                     _query = jsonData.ToArray();
 
                     await _distributedCache.SetRecordAsync(recordKey, _query);
@@ -205,6 +214,7 @@ namespace Bank_DB_MVC_Redis_DC.Controllers
                 else
                 {
                     ViewBag.QueryResult = queryResult.ToList();
+                    ViewBag.DataSource = _databaseSource;
                     _query = queryResult.ToArray();
 
                     await _distributedCache.SetRecordAsync(recordKey, _query);
@@ -214,6 +224,7 @@ namespace Bank_DB_MVC_Redis_DC.Controllers
             else
             {
                 ViewBag.QueryResult = _query;
+                ViewBag.DataSource = _distributedCacheSource;
             }
 
             return View();
@@ -237,6 +248,7 @@ namespace Bank_DB_MVC_Redis_DC.Controllers
                                   select modelData;
 
                 ViewBag.QueryResult = queryResult.ToList();
+                ViewBag.DataSource = _databaseSource;
                 _query = queryResult.ToArray();
 
                 await _distributedCache.SetRecordAsync(recordKey, _query);
@@ -245,6 +257,7 @@ namespace Bank_DB_MVC_Redis_DC.Controllers
             else
             {
                 ViewBag.QueryResult = _query;
+                ViewBag.DataSource = _distributedCacheSource;
             }
 
             return View();
@@ -268,6 +281,7 @@ namespace Bank_DB_MVC_Redis_DC.Controllers
                                   select modelData;
 
                 ViewBag.QueryResult = queryResult.ToList();
+                ViewBag.DataSource = _databaseSource;
                 _query = queryResult.ToArray();
 
                 await _distributedCache.SetRecordAsync(recordKey, _query);
@@ -276,6 +290,7 @@ namespace Bank_DB_MVC_Redis_DC.Controllers
             else
             {
                 ViewBag.QueryResult = _query;
+                ViewBag.DataSource = _distributedCacheSource;
             }
 
             return View();
@@ -299,6 +314,7 @@ namespace Bank_DB_MVC_Redis_DC.Controllers
                                   select modelData;
 
                 ViewBag.QueryResult = queryResult.ToList();
+                ViewBag.DataSource = _databaseSource;
                 _query = queryResult.ToArray();
 
                 await _distributedCache.SetRecordAsync(recordKey, _query);
@@ -307,6 +323,7 @@ namespace Bank_DB_MVC_Redis_DC.Controllers
             else
             {
                 ViewBag.QueryResult = _query;
+                ViewBag.DataSource = _distributedCacheSource;
             }
 
             return View();
@@ -330,6 +347,7 @@ namespace Bank_DB_MVC_Redis_DC.Controllers
                                   select modelData;
 
                 ViewBag.QueryResult = queryResult.ToList();
+                ViewBag.DataSource = _databaseSource;
                 _query = queryResult.ToArray();
 
                 await _distributedCache.SetRecordAsync(recordKey, _query);
@@ -338,6 +356,7 @@ namespace Bank_DB_MVC_Redis_DC.Controllers
             else
             {
                 ViewBag.QueryResult = _query;
+                ViewBag.DataSource = _distributedCacheSource;
             }
 
             return View();
@@ -361,6 +380,7 @@ namespace Bank_DB_MVC_Redis_DC.Controllers
                                   select modelData;
 
                 ViewBag.QueryResult = queryResult.ToList();
+                ViewBag.DataSource = _databaseSource;
                 _query = queryResult.ToArray();
 
                 await _distributedCache.SetRecordAsync(recordKey, _query);
@@ -369,6 +389,7 @@ namespace Bank_DB_MVC_Redis_DC.Controllers
             else
             {
                 ViewBag.QueryResult = _query;
+                ViewBag.DataSource = _distributedCacheSource;
             }
 
             return View();
