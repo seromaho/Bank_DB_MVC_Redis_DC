@@ -9,11 +9,13 @@ namespace Bank_DB_MVC_Redis_DC.Data.Bank_DB
 {
     public class Bank_DB_Context : DbContext
     {
+        public static int instanceCounter = 0;
+
         public DbSet<Bank_Tabelle> Bank_Tabelle { get; set; }
 
-        public Bank_DB_Context() { Database.EnsureCreated(); }
+        public Bank_DB_Context() { Database.EnsureCreated(); instanceCounter++; }
 
-        public Bank_DB_Context(DbContextOptions<Bank_DB_Context> options) : base(options) { Database.EnsureCreated(); }
+        public Bank_DB_Context(DbContextOptions<Bank_DB_Context> options) : base(options) { Database.EnsureCreated(); instanceCounter++; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

@@ -1,7 +1,6 @@
 ﻿using Bank_DB_MVC_Redis_DC.Data.Bank_DB;
 using Bank_DB_MVC_Redis_DC.Models;
 using Bank_DB_MVC_Redis_DC.Models.Bank_DB;
-using Bank_DB_MVC_Redis_DC;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -12,6 +11,7 @@ using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Caching.Distributed;
+using Microsoft.AspNetCore.Hosting;
 
 namespace Bank_DB_MVC_Redis_DC.Controllers
 {
@@ -20,16 +20,18 @@ namespace Bank_DB_MVC_Redis_DC.Controllers
         private readonly ILogger<DatabaseController> _logger;
         private readonly Bank_DB_Context _context;
         private readonly IDistributedCache _distributedCache;
+        private static int _instanceCounter = 0;
         private Bank_Tabelle[] _query;
         //private string _recordKey;
-        private string _databaseSource = "data fetched from database";
-        private string _distributedCacheSource = "data fetched from distributed cache";
+        private const string _databaseSource = "data fetched from database";
+        private const string _distributedCacheSource = "data fetched from distributed cache";
 
         public DatabaseController(ILogger<DatabaseController> logger, Bank_DB_Context context, IDistributedCache distributedCache)
         {
             _logger = logger;
             _context = context;
             _distributedCache = distributedCache;
+            _instanceCounter++;
         }
 
         public async Task<IActionResult> QueryPageAsync()
@@ -72,7 +74,7 @@ namespace Bank_DB_MVC_Redis_DC.Controllers
                         //_context.Database.ExecuteSqlRaw(@"SET IDENTITY_INSERT [Bank_Tabelle] OFF");
                     }
 
-                    //ViewBag.QueryResult = jsonData.ToList();
+                    //ViewBag.QueryResult = jsonData.ToArray();
                     //ViewBag.DataSource = _databaseSource;
                     _query = jsonData.ToArray();
 
@@ -81,7 +83,7 @@ namespace Bank_DB_MVC_Redis_DC.Controllers
 
                 else
                 {
-                    //ViewBag.QueryResult = queryResult.ToList();
+                    //ViewBag.QueryResult = queryResult.ToArray();
                     //ViewBag.DataSource = _databaseSource;
                     _query = queryResult.ToArray();
 
@@ -95,6 +97,9 @@ namespace Bank_DB_MVC_Redis_DC.Controllers
                 //ViewBag.DataSource = _distributedCacheSource;
             }
 
+
+            ViewBag.ControllerInstanceCounter = _instanceCounter.ToString();
+            ViewBag.ContextInstanceCounter = Bank_DB_Context.instanceCounter.ToString();
             return View();
         }
 
@@ -138,7 +143,7 @@ namespace Bank_DB_MVC_Redis_DC.Controllers
                         //_context.Database.ExecuteSqlRaw(@"SET IDENTITY_INSERT [Bank_Tabelle] OFF");
                     }
 
-                    ViewBag.QueryResult = jsonData.ToList();
+                    ViewBag.QueryResult = jsonData.ToArray();
                     ViewBag.DataSource = _databaseSource;
                     _query = jsonData.ToArray();
 
@@ -147,7 +152,7 @@ namespace Bank_DB_MVC_Redis_DC.Controllers
 
                 else
                 {
-                    ViewBag.QueryResult = queryResult.ToList();
+                    ViewBag.QueryResult = queryResult.ToArray();
                     ViewBag.DataSource = _databaseSource;
                     _query = queryResult.ToArray();
 
@@ -161,6 +166,9 @@ namespace Bank_DB_MVC_Redis_DC.Controllers
                 ViewBag.DataSource = _distributedCacheSource;
             }
 
+
+            ViewBag.ControllerInstanceCounter = _instanceCounter.ToString();
+            ViewBag.ContextInstanceCounter = Bank_DB_Context.instanceCounter.ToString();
             return View();
         }
 
@@ -204,7 +212,7 @@ namespace Bank_DB_MVC_Redis_DC.Controllers
                         //_context.Database.ExecuteSqlRaw(@"SET IDENTITY_INSERT [Bank_Tabelle] OFF");
                     }
 
-                    ViewBag.QueryResult = jsonData.ToList();
+                    ViewBag.QueryResult = jsonData.ToArray();
                     ViewBag.DataSource = _databaseSource;
                     _query = jsonData.ToArray();
 
@@ -213,7 +221,7 @@ namespace Bank_DB_MVC_Redis_DC.Controllers
 
                 else
                 {
-                    ViewBag.QueryResult = queryResult.ToList();
+                    ViewBag.QueryResult = queryResult.ToArray();
                     ViewBag.DataSource = _databaseSource;
                     _query = queryResult.ToArray();
 
@@ -227,6 +235,9 @@ namespace Bank_DB_MVC_Redis_DC.Controllers
                 ViewBag.DataSource = _distributedCacheSource;
             }
 
+
+            ViewBag.ControllerInstanceCounter = _instanceCounter.ToString();
+            ViewBag.ContextInstanceCounter = Bank_DB_Context.instanceCounter.ToString();
             return View();
         }
 
@@ -247,7 +258,7 @@ namespace Bank_DB_MVC_Redis_DC.Controllers
                                   where modelData.Bezeichnung.ToUpper().Contains(name.ToUpper()) || modelData.Kurzbezeichnung.ToUpper().Contains(name.ToUpper())
                                   select modelData;
 
-                ViewBag.QueryResult = queryResult.ToList();
+                ViewBag.QueryResult = queryResult.ToArray();
                 ViewBag.DataSource = _databaseSource;
                 _query = queryResult.ToArray();
 
@@ -260,6 +271,9 @@ namespace Bank_DB_MVC_Redis_DC.Controllers
                 ViewBag.DataSource = _distributedCacheSource;
             }
 
+
+            ViewBag.ControllerInstanceCounter = _instanceCounter.ToString();
+            ViewBag.ContextInstanceCounter = Bank_DB_Context.instanceCounter.ToString();
             return View();
         }
 
@@ -280,7 +294,7 @@ namespace Bank_DB_MVC_Redis_DC.Controllers
                                   where modelData.PLZ == PLZ
                                   select modelData;
 
-                ViewBag.QueryResult = queryResult.ToList();
+                ViewBag.QueryResult = queryResult.ToArray();
                 ViewBag.DataSource = _databaseSource;
                 _query = queryResult.ToArray();
 
@@ -293,6 +307,9 @@ namespace Bank_DB_MVC_Redis_DC.Controllers
                 ViewBag.DataSource = _distributedCacheSource;
             }
 
+
+            ViewBag.ControllerInstanceCounter = _instanceCounter.ToString();
+            ViewBag.ContextInstanceCounter = Bank_DB_Context.instanceCounter.ToString();
             return View();
         }
 
@@ -313,7 +330,7 @@ namespace Bank_DB_MVC_Redis_DC.Controllers
                                   where modelData.Ort.ToUpper().Contains(ort.ToUpper())
                                   select modelData;
 
-                ViewBag.QueryResult = queryResult.ToList();
+                ViewBag.QueryResult = queryResult.ToArray();
                 ViewBag.DataSource = _databaseSource;
                 _query = queryResult.ToArray();
 
@@ -326,6 +343,9 @@ namespace Bank_DB_MVC_Redis_DC.Controllers
                 ViewBag.DataSource = _distributedCacheSource;
             }
 
+
+            ViewBag.ControllerInstanceCounter = _instanceCounter.ToString();
+            ViewBag.ContextInstanceCounter = Bank_DB_Context.instanceCounter.ToString();
             return View();
         }
 
@@ -346,7 +366,7 @@ namespace Bank_DB_MVC_Redis_DC.Controllers
                                   where modelData.BLZ == BLZ
                                   select modelData;
 
-                ViewBag.QueryResult = queryResult.ToList();
+                ViewBag.QueryResult = queryResult.ToArray();
                 ViewBag.DataSource = _databaseSource;
                 _query = queryResult.ToArray();
 
@@ -359,6 +379,9 @@ namespace Bank_DB_MVC_Redis_DC.Controllers
                 ViewBag.DataSource = _distributedCacheSource;
             }
 
+
+            ViewBag.ControllerInstanceCounter = _instanceCounter.ToString();
+            ViewBag.ContextInstanceCounter = Bank_DB_Context.instanceCounter.ToString();
             return View();
         }
 
@@ -379,7 +402,7 @@ namespace Bank_DB_MVC_Redis_DC.Controllers
                                   where modelData.BIC.ToUpper().Contains(BIC.ToUpper())
                                   select modelData;
 
-                ViewBag.QueryResult = queryResult.ToList();
+                ViewBag.QueryResult = queryResult.ToArray();
                 ViewBag.DataSource = _databaseSource;
                 _query = queryResult.ToArray();
 
@@ -392,17 +415,24 @@ namespace Bank_DB_MVC_Redis_DC.Controllers
                 ViewBag.DataSource = _distributedCacheSource;
             }
 
+
+            ViewBag.ControllerInstanceCounter = _instanceCounter.ToString();
+            ViewBag.ContextInstanceCounter = Bank_DB_Context.instanceCounter.ToString();
             return View();
         }
 
         public IActionResult Privacy()
         {
+            ViewBag.ControllerInstanceCounter = _instanceCounter.ToString();
+            ViewBag.ContextInstanceCounter = Bank_DB_Context.instanceCounter.ToString();
             return View();
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
+            ViewBag.ControllerInstanceCounter = _instanceCounter.ToString();
+            ViewBag.ContextInstanceCounter = Bank_DB_Context.instanceCounter.ToString();
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }
