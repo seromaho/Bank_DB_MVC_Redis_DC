@@ -2,7 +2,7 @@
     ViewData["Title"] = "Database";
 }
 
-<table>
+<table class="table-hover">
 
     <tr>
         <th>Bezeichnung</th>
@@ -13,15 +13,15 @@
         <th>Kurzbezeichnung</th>
     </tr>
 
-    @foreach (Bank_DB_MVC_Redis_DC.Models.Bank_DB.Bank_Tabelle bank in ViewBag.blztabelle)
+    @foreach (Bank_DB_MVC_Redis_DC.Models.Bank_DB.Bank_Tabelle dataSet in ViewBag.QueryResult)
     {
-        <tr onmouseover="style.backgroundColor = '#4d0000'" onmouseout="style.backgroundColor = document.body.style.backgroundColor">
-            <td>@bank.Bezeichnung</td>
-            <td>@bank.PLZ</td>
-            <td>@bank.Ort</td>
-            <td>@bank.BLZ</td>
-            <td>@bank.BIC</td>
-            <td>@bank.Kurzbezeichnung</td>
+        <tr @*onmouseover="style.backgroundColor = '#4d0000'" onmouseout="style.backgroundColor = document.body.style.backgroundColor"*@>
+            <td>@dataSet.Bezeichnung</td>
+            <td>@dataSet.PLZ</td>
+            <td>@dataSet.Ort</td>
+            <td>@dataSet.BLZ</td>
+            <td>@dataSet.BIC</td>
+            <td>@dataSet.Kurzbezeichnung</td>
         </tr>
     }
 

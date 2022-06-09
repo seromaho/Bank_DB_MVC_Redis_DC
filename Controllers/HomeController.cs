@@ -20,7 +20,8 @@ namespace Bank_DB_MVC_Redis_DC.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly Bank_DB_Context _context;
         private readonly IDistributedCache _distributedCache;
-        private Bank_Tabelle[] Query;
+        private Bank_Tabelle[] _query;
+        //private string _recordKey;
 
         public HomeController(ILogger<HomeController> logger, Bank_DB_Context context, IDistributedCache distributedCache)
         {
@@ -29,38 +30,35 @@ namespace Bank_DB_MVC_Redis_DC.Controllers
             _distributedCache = distributedCache;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> IndexAsync()
         {
-            return View();
-        }
+            _query = null;
 
-        public async Task<IActionResult> SeedAsync()
-        {
-            Query = null;
+            string recordKey = "Database_" + DateTime.Now.ToString("yyyyMMdd_hh");
 
-            string recordKey = "Query_" + DateTime.Now.ToString("yyyyMMdd_hh");
+            //_recordKey = "Database_" + DateTime.Now.ToString("yyyyMMdd_hh");
 
-            Query = await _distributedCache.GetRecordAsync<Bank_Tabelle[]>(recordKey);
+            _query = await _distributedCache.GetRecordAsync<Bank_Tabelle[]>(recordKey);
 
-            if (Query is null)
+            if (_query is null)
             {
-                var Banken = from Blztabelle in _context.Bank_Tabelle select Blztabelle;
+                var queryResult = from modelData in _context.Bank_Tabelle select modelData;
 
-                if (Banken.Count() == 0)
+                if (queryResult.Count() == 0)
                 {
-                    FileStream streamREADER0 = new FileStream(@"Data\Bank_DB\Bank_Tabelle-w-o-PK.json", FileMode.OpenOrCreate);
-                    StreamReader streamREADER1 = new StreamReader(streamREADER0);
+                    FileStream fileStream = new FileStream(@"Data\Bank_DB\Bank_Tabelle-w-o-PK.json", FileMode.OpenOrCreate);
+                    StreamReader streamReader = new StreamReader(fileStream);
 
-                    IEnumerable<Bank_Tabelle> blztabelle = JsonSerializer.Deserialize<IEnumerable<Bank_Tabelle>>(streamREADER1.ReadToEnd());
+                    IEnumerable<Bank_Tabelle> jsonData = JsonSerializer.Deserialize<IEnumerable<Bank_Tabelle>>(streamReader.ReadToEnd());
 
-                    streamREADER1.Close();
-                    streamREADER0.Close();
+                    streamReader.Close();
+                    fileStream.Close();
 
                     using (_context)
                     {
-                        foreach (Bank_Tabelle entry in blztabelle)
+                        foreach (Bank_Tabelle dataSet in jsonData)
                         {
-                            _context.Add(entry);
+                            _context.Add(dataSet);
                         }
 
                         // doesn't work with Entity Framework Core ???
@@ -72,132 +70,308 @@ namespace Bank_DB_MVC_Redis_DC.Controllers
                         //_context.Database.ExecuteSqlRaw(@"SET IDENTITY_INSERT [Bank_Tabelle] OFF");
                     }
 
-                    ViewBag.blztabelle = blztabelle.ToList();
-                    Query = blztabelle.ToArray();
+                    //ViewBag.QueryResult = jsonData.ToList();
+                    _query = jsonData.ToArray();
 
-                    await _distributedCache.SetRecordAsync(recordKey, Query);
+                    await _distributedCache.SetRecordAsync(recordKey, _query);
                 }
 
                 else
                 {
-                    ViewBag.blztabelle = Banken.ToList();
-                    Query = Banken.ToArray();
+                    //ViewBag.QueryResult = queryResult.ToList();
+                    _query = queryResult.ToArray();
 
-                    await _distributedCache.SetRecordAsync(recordKey, Query);
+                    await _distributedCache.SetRecordAsync(recordKey, _query);
                 }
             }
 
             else
             {
-                ViewBag.blztabelle = Query;
+                //ViewBag.QueryResult = _query;
             }
 
             return View();
         }
 
-        public IActionResult Database()
+        public async Task<IActionResult> SeedAsync()
         {
-            using (_context)
+            _query = null;
+
+            string recordKey = "Seed_" + DateTime.Now.ToString("yyyyMMdd_hh");
+
+            //_recordKey = "Seed_" + DateTime.Now.ToString("yyyyMMdd_hh");
+
+            _query = await _distributedCache.GetRecordAsync<Bank_Tabelle[]>(recordKey);
+
+            if (_query is null)
             {
-                var Banken = from Blztabelle in _context.Bank_Tabelle select Blztabelle;
+                var queryResult = from modelData in _context.Bank_Tabelle select modelData;
 
-                //List<BLZTabelle> list = new List<BLZTabelle>(Banken);
+                if (queryResult.Count() == 0)
+                {
+                    FileStream fileStream = new FileStream(@"Data\Bank_DB\Bank_Tabelle-w-o-PK.json", FileMode.OpenOrCreate);
+                    StreamReader streamReader = new StreamReader(fileStream);
 
-                ViewBag.blztabelle = Banken.ToList();
+                    IEnumerable<Bank_Tabelle> jsonData = JsonSerializer.Deserialize<IEnumerable<Bank_Tabelle>>(streamReader.ReadToEnd());
 
-                return View();
+                    streamReader.Close();
+                    fileStream.Close();
+
+                    using (_context)
+                    {
+                        foreach (Bank_Tabelle dataSet in jsonData)
+                        {
+                            _context.Add(dataSet);
+                        }
+
+                        // doesn't work with Entity Framework Core ???
+                        //_context.Database.ExecuteSqlRaw(@"SET IDENTITY_INSERT [Bank_Tabelle] ON");
+
+                        _context.SaveChanges();
+
+                        // doesn't work with Entity Framework Core ???
+                        //_context.Database.ExecuteSqlRaw(@"SET IDENTITY_INSERT [Bank_Tabelle] OFF");
+                    }
+
+                    ViewBag.QueryResult = jsonData.ToList();
+                    _query = jsonData.ToArray();
+
+                    await _distributedCache.SetRecordAsync(recordKey, _query);
+                }
+
+                else
+                {
+                    ViewBag.QueryResult = queryResult.ToList();
+                    _query = queryResult.ToArray();
+
+                    await _distributedCache.SetRecordAsync(recordKey, _query);
+                }
             }
+
+            else
+            {
+                ViewBag.QueryResult = _query;
+            }
+
+            return View();
+        }
+
+        public async Task<IActionResult> DatabaseAsync()
+        {
+            _query = null;
+
+            string recordKey = "Database_" + DateTime.Now.ToString("yyyyMMdd_hh");
+
+            //_recordKey = "Database_" + DateTime.Now.ToString("yyyyMMdd_hh");
+
+            _query = await _distributedCache.GetRecordAsync<Bank_Tabelle[]>(recordKey);
+
+            if (_query is null)
+            {
+                var queryResult = from modelData in _context.Bank_Tabelle select modelData;
+
+                if (queryResult.Count() == 0)
+                {
+                    FileStream fileStream = new FileStream(@"Data\Bank_DB\Bank_Tabelle-w-o-PK.json", FileMode.OpenOrCreate);
+                    StreamReader streamReader = new StreamReader(fileStream);
+
+                    IEnumerable<Bank_Tabelle> jsonData = JsonSerializer.Deserialize<IEnumerable<Bank_Tabelle>>(streamReader.ReadToEnd());
+
+                    streamReader.Close();
+                    fileStream.Close();
+
+                    using (_context)
+                    {
+                        foreach (Bank_Tabelle dataSet in jsonData)
+                        {
+                            _context.Add(dataSet);
+                        }
+
+                        // doesn't work with Entity Framework Core ???
+                        //_context.Database.ExecuteSqlRaw(@"SET IDENTITY_INSERT [Bank_Tabelle] ON");
+
+                        _context.SaveChanges();
+
+                        // doesn't work with Entity Framework Core ???
+                        //_context.Database.ExecuteSqlRaw(@"SET IDENTITY_INSERT [Bank_Tabelle] OFF");
+                    }
+
+                    ViewBag.QueryResult = jsonData.ToList();
+                    _query = jsonData.ToArray();
+
+                    await _distributedCache.SetRecordAsync(recordKey, _query);
+                }
+
+                else
+                {
+                    ViewBag.QueryResult = queryResult.ToList();
+                    _query = queryResult.ToArray();
+
+                    await _distributedCache.SetRecordAsync(recordKey, _query);
+                }
+            }
+
+            else
+            {
+                ViewBag.QueryResult = _query;
+            }
+
+            return View();
         }
 
         [HttpPost]
-        public IActionResult NameQuery(string name)
+        public async Task<IActionResult> NameQueryAsync(string name)
         {
-            using (_context)
+            _query = null;
+
+            string recordKey = "NameQuery_" + name + "_" + DateTime.Now.ToString("yyyyMMdd_hh");
+
+            //_recordKey = "NameQuery_" + name + "_" + DateTime.Now.ToString("yyyyMMdd_hh");
+
+            _query = await _distributedCache.GetRecordAsync<Bank_Tabelle[]>(recordKey);
+
+            if (_query is null)
             {
-                var Banken = from Blztabelle in _context.Bank_Tabelle
-                             where Blztabelle.Bezeichnung.ToUpper().Contains(name.ToUpper()) || Blztabelle.Kurzbezeichnung.ToUpper().Contains(name.ToUpper())
-                             select Blztabelle;
+                var queryResult = from modelData in _context.Bank_Tabelle
+                                  where modelData.Bezeichnung.ToUpper().Contains(name.ToUpper()) || modelData.Kurzbezeichnung.ToUpper().Contains(name.ToUpper())
+                                  select modelData;
 
-                //int queryCOUNTER = 0;
+                ViewBag.QueryResult = queryResult.ToList();
+                _query = queryResult.ToArray();
 
-                //foreach (BLZTabelle bankname in Banken)
-                //{
-                //    queryCOUNTER++;
-                //}
-
-                //BLZTabelle[] queryARRAY = new BLZTabelle[queryCOUNTER];
-                //int arrayINDEX = 0;
-
-                //foreach (BLZTabelle bankname in Banken)
-                //{
-                //    queryARRAY[arrayINDEX] = bankname;
-                //    arrayINDEX++;
-                //}
-
-                ViewBag.blztabelle = Banken.ToList();
-
-                return View();
+                await _distributedCache.SetRecordAsync(recordKey, _query);
             }
+
+            else
+            {
+                ViewBag.QueryResult = _query;
+            }
+
+            return View();
         }
 
         [HttpPost]
-        public IActionResult PLZquery(int PLZ)
+        public async Task<IActionResult> PLZqueryAsync(int PLZ)
         {
-            using (_context)
+            _query = null;
+
+            string recordKey = "PLZquery_" + PLZ.ToString() + "_" + DateTime.Now.ToString("yyyyMMdd_hh");
+
+            //_recordKey = "PLZquery_" + PLZ.ToString() + "_" + DateTime.Now.ToString("yyyyMMdd_hh");
+
+            _query = await _distributedCache.GetRecordAsync<Bank_Tabelle[]>(recordKey);
+
+            if (_query is null)
             {
-                var Banken = from Blztabelle in _context.Bank_Tabelle
-                             where Blztabelle.PLZ == PLZ
-                             select Blztabelle;
+                var queryResult = from modelData in _context.Bank_Tabelle
+                                  where modelData.PLZ == PLZ
+                                  select modelData;
 
-                ViewBag.blztabelle = Banken.ToList();
+                ViewBag.QueryResult = queryResult.ToList();
+                _query = queryResult.ToArray();
 
-                return View();
+                await _distributedCache.SetRecordAsync(recordKey, _query);
             }
+
+            else
+            {
+                ViewBag.QueryResult = _query;
+            }
+
+            return View();
         }
 
         [HttpPost]
-        public IActionResult OrtQuery(string ort)
+        public async Task<IActionResult> OrtQueryAsync(string ort)
         {
-            using (_context)
+            _query = null;
+
+            string recordKey = "OrtQuery_" + ort + "_" + DateTime.Now.ToString("yyyyMMdd_hh");
+
+            //_recordKey = "OrtQuery_" + ort + "_" + DateTime.Now.ToString("yyyyMMdd_hh");
+
+            _query = await _distributedCache.GetRecordAsync<Bank_Tabelle[]>(recordKey);
+
+            if (_query is null)
             {
-                var Banken = from Blztabelle in _context.Bank_Tabelle
-                             where Blztabelle.Ort.ToUpper().Contains(ort.ToUpper())
-                             select Blztabelle;
+                var queryResult = from modelData in _context.Bank_Tabelle
+                                  where modelData.Ort.ToUpper().Contains(ort.ToUpper())
+                                  select modelData;
 
-                ViewBag.blztabelle = Banken.ToList();
+                ViewBag.QueryResult = queryResult.ToList();
+                _query = queryResult.ToArray();
 
-                return View();
+                await _distributedCache.SetRecordAsync(recordKey, _query);
             }
+
+            else
+            {
+                ViewBag.QueryResult = _query;
+            }
+
+            return View();
         }
 
         [HttpPost]
-        public IActionResult BLZquery(string BLZ)
+        public async Task<IActionResult> BLZqueryAsync(string BLZ)
         {
-            using (_context)
+            _query = null;
+
+            string recordKey = "BLZquery_" + BLZ + "_" + DateTime.Now.ToString("yyyyMMdd_hh");
+
+            //_recordKey = "BLZquery_" + BLZ + "_" + DateTime.Now.ToString("yyyyMMdd_hh");
+
+            _query = await _distributedCache.GetRecordAsync<Bank_Tabelle[]>(recordKey);
+
+            if (_query is null)
             {
-                var Banken = from Blztabelle in _context.Bank_Tabelle
-                             where Blztabelle.BLZ == BLZ
-                             select Blztabelle;
+                var queryResult = from modelData in _context.Bank_Tabelle
+                                  where modelData.BLZ == BLZ
+                                  select modelData;
 
-                ViewBag.blztabelle = Banken.ToList();
+                ViewBag.QueryResult = queryResult.ToList();
+                _query = queryResult.ToArray();
 
-                return View();
+                await _distributedCache.SetRecordAsync(recordKey, _query);
             }
+
+            else
+            {
+                ViewBag.QueryResult = _query;
+            }
+
+            return View();
         }
 
         [HttpPost]
-        public IActionResult BICquery(string BIC)
+        public async Task<IActionResult> BICqueryAsync(string BIC)
         {
-            using (_context)
+            _query = null;
+
+            string recordKey = "BICquery_" + BIC + "_" + DateTime.Now.ToString("yyyyMMdd_hh");
+
+            //_recordKey = "BICquery_" + BIC + "_" + DateTime.Now.ToString("yyyyMMdd_hh");
+
+            _query = await _distributedCache.GetRecordAsync<Bank_Tabelle[]>(recordKey);
+
+            if (_query is null)
             {
-                var Banken = from Blztabelle in _context.Bank_Tabelle
-                             where Blztabelle.BIC.ToUpper().Contains(BIC.ToUpper())
-                             select Blztabelle;
+                var queryResult = from modelData in _context.Bank_Tabelle
+                                  where modelData.BIC.ToUpper().Contains(BIC.ToUpper())
+                                  select modelData;
 
-                ViewBag.blztabelle = Banken.ToList();
+                ViewBag.QueryResult = queryResult.ToList();
+                _query = queryResult.ToArray();
 
-                return View();
+                await _distributedCache.SetRecordAsync(recordKey, _query);
             }
+
+            else
+            {
+                ViewBag.QueryResult = _query;
+            }
+
+            return View();
         }
 
         public IActionResult Privacy()
