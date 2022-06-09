@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
+﻿using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization; // using Data\Bank_DB\Bank_Tabelle-w-PK.json
-using System.Threading.Tasks;
 
 namespace Bank_DB_MVC_Redis_DC.Models.Bank_DB
 {

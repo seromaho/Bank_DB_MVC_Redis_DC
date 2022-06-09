@@ -1,9 +1,5 @@
 ﻿using Bank_DB_MVC_Redis_DC.Models.Bank_DB;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Bank_DB_MVC_Redis_DC.Data.Bank_DB
 {
