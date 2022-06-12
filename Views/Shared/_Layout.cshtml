@@ -35,7 +35,7 @@
                                 <span class="nav-link text-dark">Context instances: @ViewBag.ContextInstanceCounter</span>
                             </li>
                             <li>
-                                <span class="nav-link text-dark">@ViewBag.DataSource</span>
+                                <span class="nav-link text-dark">@ViewBag.DataSource@ViewBag.Stopwatch</span>
                             </li>
                         </environment>
                     </ul>
@@ -59,7 +59,7 @@
             <environment include="Development">
                 <span> - NUM of Controller instances: @ViewBag.ControllerInstanceCounter</span>
                 <span> - NUM of Context instances: @ViewBag.ContextInstanceCounter</span>
-                <span> - @ViewBag.DataSource</span>
+                <span> - @ViewBag.DataSource@ViewBag.Stopwatch</span>
             </environment>
         </div>
     </footer>

@@ -104,6 +104,8 @@ namespace Bank_DB_MVC_Redis_DC.Controllers
 
         public async Task<IActionResult> SeedAsync()
         {
+            Stopwatch stopwatch = Stopwatch.StartNew();
+
             _query = null;
 
             string recordKey = "Seed_" + DateTime.Now.ToString("yyyyMMdd_hh");
@@ -165,7 +167,8 @@ namespace Bank_DB_MVC_Redis_DC.Controllers
                 ViewBag.DataSource = _distributedCacheSource;
             }
 
-
+            stopwatch.Stop();
+            ViewBag.Stopwatch = " in " + stopwatch.ElapsedMilliseconds.ToString() + " ms";
             ViewBag.ControllerInstanceCounter = _instanceCounter.ToString();
             ViewBag.ContextInstanceCounter = Bank_DB_Context.instanceCounter.ToString();
             return View();
@@ -173,6 +176,8 @@ namespace Bank_DB_MVC_Redis_DC.Controllers
 
         public async Task<IActionResult> DatabaseAsync()
         {
+            Stopwatch stopwatch = Stopwatch.StartNew();
+
             _query = null;
 
             string recordKey = "Database_" + DateTime.Now.ToString("yyyyMMdd_hh");
@@ -234,7 +239,8 @@ namespace Bank_DB_MVC_Redis_DC.Controllers
                 ViewBag.DataSource = _distributedCacheSource;
             }
 
-
+            stopwatch.Stop();
+            ViewBag.Stopwatch = " in " + stopwatch.ElapsedMilliseconds.ToString() + " ms";
             ViewBag.ControllerInstanceCounter = _instanceCounter.ToString();
             ViewBag.ContextInstanceCounter = Bank_DB_Context.instanceCounter.ToString();
             return View();
@@ -243,6 +249,8 @@ namespace Bank_DB_MVC_Redis_DC.Controllers
         [HttpPost]
         public async Task<IActionResult> NameQueryAsync(string name)
         {
+            Stopwatch stopwatch = Stopwatch.StartNew();
+
             _query = null;
 
             string recordKey = "NameQuery_" + name + "_" + DateTime.Now.ToString("yyyyMMdd_hh");
@@ -270,7 +278,8 @@ namespace Bank_DB_MVC_Redis_DC.Controllers
                 ViewBag.DataSource = _distributedCacheSource;
             }
 
-
+            stopwatch.Stop();
+            ViewBag.Stopwatch = " in " + stopwatch.ElapsedMilliseconds.ToString() + " ms";
             ViewBag.ControllerInstanceCounter = _instanceCounter.ToString();
             ViewBag.ContextInstanceCounter = Bank_DB_Context.instanceCounter.ToString();
             return View();
@@ -279,6 +288,8 @@ namespace Bank_DB_MVC_Redis_DC.Controllers
         [HttpPost]
         public async Task<IActionResult> PLZqueryAsync(int PLZ)
         {
+            Stopwatch stopwatch = Stopwatch.StartNew();
+
             _query = null;
 
             string recordKey = "PLZquery_" + PLZ.ToString() + "_" + DateTime.Now.ToString("yyyyMMdd_hh");
@@ -306,7 +317,8 @@ namespace Bank_DB_MVC_Redis_DC.Controllers
                 ViewBag.DataSource = _distributedCacheSource;
             }
 
-
+            stopwatch.Stop();
+            ViewBag.Stopwatch = " in " + stopwatch.ElapsedMilliseconds.ToString() + " ms";
             ViewBag.ControllerInstanceCounter = _instanceCounter.ToString();
             ViewBag.ContextInstanceCounter = Bank_DB_Context.instanceCounter.ToString();
             return View();
@@ -315,6 +327,8 @@ namespace Bank_DB_MVC_Redis_DC.Controllers
         [HttpPost]
         public async Task<IActionResult> OrtQueryAsync(string ort)
         {
+            Stopwatch stopwatch = Stopwatch.StartNew();
+
             _query = null;
 
             string recordKey = "OrtQuery_" + ort + "_" + DateTime.Now.ToString("yyyyMMdd_hh");
@@ -342,7 +356,8 @@ namespace Bank_DB_MVC_Redis_DC.Controllers
                 ViewBag.DataSource = _distributedCacheSource;
             }
 
-
+            stopwatch.Stop();
+            ViewBag.Stopwatch = " in " + stopwatch.ElapsedMilliseconds.ToString() + " ms";
             ViewBag.ControllerInstanceCounter = _instanceCounter.ToString();
             ViewBag.ContextInstanceCounter = Bank_DB_Context.instanceCounter.ToString();
             return View();
@@ -351,6 +366,8 @@ namespace Bank_DB_MVC_Redis_DC.Controllers
         [HttpPost]
         public async Task<IActionResult> BLZqueryAsync(string BLZ)
         {
+            Stopwatch stopwatch = Stopwatch.StartNew();
+
             _query = null;
 
             string recordKey = "BLZquery_" + BLZ + "_" + DateTime.Now.ToString("yyyyMMdd_hh");
@@ -378,7 +395,8 @@ namespace Bank_DB_MVC_Redis_DC.Controllers
                 ViewBag.DataSource = _distributedCacheSource;
             }
 
-
+            stopwatch.Stop();
+            ViewBag.Stopwatch = " in " + stopwatch.ElapsedMilliseconds.ToString() + " ms";
             ViewBag.ControllerInstanceCounter = _instanceCounter.ToString();
             ViewBag.ContextInstanceCounter = Bank_DB_Context.instanceCounter.ToString();
             return View();
@@ -387,6 +405,8 @@ namespace Bank_DB_MVC_Redis_DC.Controllers
         [HttpPost]
         public async Task<IActionResult> BICqueryAsync(string BIC)
         {
+            Stopwatch stopwatch = Stopwatch.StartNew();
+
             _query = null;
 
             string recordKey = "BICquery_" + BIC + "_" + DateTime.Now.ToString("yyyyMMdd_hh");
@@ -414,7 +434,8 @@ namespace Bank_DB_MVC_Redis_DC.Controllers
                 ViewBag.DataSource = _distributedCacheSource;
             }
 
-
+            stopwatch.Stop();
+            ViewBag.Stopwatch = " in " + stopwatch.ElapsedMilliseconds.ToString() + " ms";
             ViewBag.ControllerInstanceCounter = _instanceCounter.ToString();
             ViewBag.ContextInstanceCounter = Bank_DB_Context.instanceCounter.ToString();
             return View();
