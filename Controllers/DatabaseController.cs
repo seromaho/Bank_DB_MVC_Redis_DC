@@ -49,7 +49,7 @@ namespace Bank_DB_MVC_Redis_DC.Controllers
 
                 if (queryResult.Count() == 0)
                 {
-                    FileStream fileStream = new FileStream(@"Data\Bank_DB\Bank_Tabelle-w-o-PK.json", FileMode.OpenOrCreate);
+                    FileStream fileStream = new FileStream(Path.Combine(Directory.GetCurrentDirectory(),"Data", "Bank_DB", "Bank_Tabelle-w-o-PK.json"), FileMode.OpenOrCreate);
                     StreamReader streamReader = new StreamReader(fileStream);
 
                     IEnumerable<Bank_Tabelle> jsonData = JsonSerializer.Deserialize<IEnumerable<Bank_Tabelle>>(streamReader.ReadToEnd());
@@ -120,7 +120,7 @@ namespace Bank_DB_MVC_Redis_DC.Controllers
 
                 if (queryResult.Count() == 0)
                 {
-                    FileStream fileStream = new FileStream(@"Data\Bank_DB\Bank_Tabelle-w-o-PK.json", FileMode.OpenOrCreate);
+                    FileStream fileStream = new FileStream(Path.Combine(Directory.GetCurrentDirectory(), "Data", "Bank_DB", "Bank_Tabelle-w-o-PK.json"), FileMode.OpenOrCreate);
                     StreamReader streamReader = new StreamReader(fileStream);
 
                     IEnumerable<Bank_Tabelle> jsonData = JsonSerializer.Deserialize<IEnumerable<Bank_Tabelle>>(streamReader.ReadToEnd());
@@ -192,7 +192,7 @@ namespace Bank_DB_MVC_Redis_DC.Controllers
 
                 if (queryResult.Count() == 0)
                 {
-                    FileStream fileStream = new FileStream(@"Data\Bank_DB\Bank_Tabelle-w-o-PK.json", FileMode.OpenOrCreate);
+                    FileStream fileStream = new FileStream(Path.Combine(Directory.GetCurrentDirectory(), "Data", "Bank_DB", "Bank_Tabelle-w-o-PK.json"), FileMode.OpenOrCreate);
                     StreamReader streamReader = new StreamReader(fileStream);
 
                     IEnumerable<Bank_Tabelle> jsonData = JsonSerializer.Deserialize<IEnumerable<Bank_Tabelle>>(streamReader.ReadToEnd());
