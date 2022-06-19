@@ -21,23 +21,29 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Database" asp-action="QueryPage">Query Database</a>
                         </li>
-                        <li class="nav-item">
+                        @*<li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Database" asp-action="Seed">Seed Database</a>
-                        </li>
+                        </li>*@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Database" asp-action="Privacy">Privacy</a>
                         </li>
-                        <environment include="Development">
+                        @*<environment include="Development">
                             <li>
                                 <span class="nav-link text-dark">Controller instances: @ViewBag.ControllerInstanceCounter</span>
                             </li>
                             <li>
                                 <span class="nav-link text-dark">Context instances: @ViewBag.ContextInstanceCounter</span>
-                            </li>
+                            </li>*@
+                        @if (ViewBag.QueryResult != null)
+                        {
                             <li>
-                                <span class="nav-link text-dark">@ViewBag.DataSource@ViewBag.Stopwatch</span>
+                                <span class="nav-link text-dark">Query Result(s) = @ViewBag.QueryResult.Length</span>
                             </li>
-                        </environment>
+                        }
+                        <li>
+                            <span class="nav-link text-dark">@ViewBag.DataSource@ViewBag.Stopwatch</span>
+                        </li>
+                        @*</environment>*@
                     </ul>
                 </div>
             </div>
@@ -54,13 +60,17 @@
             &copy; 2022 - Bank_DB MVC -
             <a asp-area="" asp-controller="Database" asp-action="Database">View Database</a> -
             <a asp-area="" asp-controller="Database" asp-action="QueryPage">Query Database</a> -
-            <a asp-area="" asp-controller="Database" asp-action="Seed">Seed Database</a> -
+            @*<a asp-area="" asp-controller="Database" asp-action="Seed">Seed Database</a> -*@
             <a asp-area="" asp-controller="Database" asp-action="Privacy">Privacy</a>
-            <environment include="Development">
+            @*<environment include="Development">
                 <span> - NUM of Controller instances: @ViewBag.ControllerInstanceCounter</span>
-                <span> - NUM of Context instances: @ViewBag.ContextInstanceCounter</span>
-                <span> - @ViewBag.DataSource@ViewBag.Stopwatch</span>
-            </environment>
+                <span> - NUM of Context instances: @ViewBag.ContextInstanceCounter</span>*@
+            @if (ViewBag.QueryResult != null)
+            {
+                <span> - Query Result(s) = @ViewBag.QueryResult.Length</span>
+            }
+            <span> - @ViewBag.DataSource@ViewBag.Stopwatch</span>
+            @*</environment>*@
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

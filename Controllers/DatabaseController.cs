@@ -21,7 +21,7 @@ namespace Bank_DB_MVC_Redis_DC.Controllers
         private readonly IDistributedCache _distributedCache;
         private static int _instanceCounter = 0;
         private Bank_Tabelle[] _query;
-        //private string _recordKey;
+        private string _recordKey;
         private const string _databaseSource = "data fetched from database";
         private const string _distributedCacheSource = "data fetched from distributed cache";
 
@@ -37,11 +37,11 @@ namespace Bank_DB_MVC_Redis_DC.Controllers
         {
             _query = null;
 
-            string recordKey = "Database_" + DateTime.Now.ToString("yyyyMMdd_hh");
+            //string recordKey = "Database_" + DateTime.Now.ToString("yyyyMMdd_hh");
 
-            //_recordKey = "Database_" + DateTime.Now.ToString("yyyyMMdd_hh");
+            _recordKey = "Database_" + DateTime.Now.ToString("yyyyMMdd_hh");
 
-            _query = await _distributedCache.GetRecordAsync<Bank_Tabelle[]>(recordKey);
+            _query = await _distributedCache.GetRecordAsync<Bank_Tabelle[]>(_recordKey);
 
             if (_query is null)
             {
@@ -77,7 +77,7 @@ namespace Bank_DB_MVC_Redis_DC.Controllers
                     //ViewBag.DataSource = _databaseSource;
                     _query = jsonData.ToArray();
 
-                    await _distributedCache.SetRecordAsync(recordKey, _query);
+                    await _distributedCache.SetRecordAsync(_recordKey, _query);
                 }
 
                 else
@@ -86,7 +86,7 @@ namespace Bank_DB_MVC_Redis_DC.Controllers
                     //ViewBag.DataSource = _databaseSource;
                     _query = queryResult.ToArray();
 
-                    await _distributedCache.SetRecordAsync(recordKey, _query);
+                    await _distributedCache.SetRecordAsync(_recordKey, _query);
                 }
             }
 
@@ -108,11 +108,11 @@ namespace Bank_DB_MVC_Redis_DC.Controllers
 
             _query = null;
 
-            string recordKey = "Seed_" + DateTime.Now.ToString("yyyyMMdd_hh");
+            //string recordKey = "Seed_" + DateTime.Now.ToString("yyyyMMdd_hh");
 
-            //_recordKey = "Seed_" + DateTime.Now.ToString("yyyyMMdd_hh");
+            _recordKey = "Seed_" + DateTime.Now.ToString("yyyyMMdd_hh");
 
-            _query = await _distributedCache.GetRecordAsync<Bank_Tabelle[]>(recordKey);
+            _query = await _distributedCache.GetRecordAsync<Bank_Tabelle[]>(_recordKey);
 
             if (_query is null)
             {
@@ -148,7 +148,7 @@ namespace Bank_DB_MVC_Redis_DC.Controllers
                     ViewBag.DataSource = _databaseSource;
                     _query = jsonData.ToArray();
 
-                    await _distributedCache.SetRecordAsync(recordKey, _query);
+                    await _distributedCache.SetRecordAsync(_recordKey, _query);
                 }
 
                 else
@@ -157,7 +157,7 @@ namespace Bank_DB_MVC_Redis_DC.Controllers
                     ViewBag.DataSource = _databaseSource;
                     _query = queryResult.ToArray();
 
-                    await _distributedCache.SetRecordAsync(recordKey, _query);
+                    await _distributedCache.SetRecordAsync(_recordKey, _query);
                 }
             }
 
@@ -180,11 +180,11 @@ namespace Bank_DB_MVC_Redis_DC.Controllers
 
             _query = null;
 
-            string recordKey = "Database_" + DateTime.Now.ToString("yyyyMMdd_hh");
+            //string recordKey = "Database_" + DateTime.Now.ToString("yyyyMMdd_hh");
 
-            //_recordKey = "Database_" + DateTime.Now.ToString("yyyyMMdd_hh");
+            _recordKey = "Database_" + DateTime.Now.ToString("yyyyMMdd_hh");
 
-            _query = await _distributedCache.GetRecordAsync<Bank_Tabelle[]>(recordKey);
+            _query = await _distributedCache.GetRecordAsync<Bank_Tabelle[]>(_recordKey);
 
             if (_query is null)
             {
@@ -220,7 +220,7 @@ namespace Bank_DB_MVC_Redis_DC.Controllers
                     ViewBag.DataSource = _databaseSource;
                     _query = jsonData.ToArray();
 
-                    await _distributedCache.SetRecordAsync(recordKey, _query);
+                    await _distributedCache.SetRecordAsync(_recordKey, _query);
                 }
 
                 else
@@ -229,7 +229,7 @@ namespace Bank_DB_MVC_Redis_DC.Controllers
                     ViewBag.DataSource = _databaseSource;
                     _query = queryResult.ToArray();
 
-                    await _distributedCache.SetRecordAsync(recordKey, _query);
+                    await _distributedCache.SetRecordAsync(_recordKey, _query);
                 }
             }
 
@@ -253,11 +253,11 @@ namespace Bank_DB_MVC_Redis_DC.Controllers
 
             _query = null;
 
-            string recordKey = "NameQuery_" + name + "_" + DateTime.Now.ToString("yyyyMMdd_hh");
+            //string recordKey = "NameQuery_" + name + "_" + DateTime.Now.ToString("yyyyMMdd_hh");
 
-            //_recordKey = "NameQuery_" + name + "_" + DateTime.Now.ToString("yyyyMMdd_hh");
+            _recordKey = "NameQuery_" + name + "_" + DateTime.Now.ToString("yyyyMMdd_hh");
 
-            _query = await _distributedCache.GetRecordAsync<Bank_Tabelle[]>(recordKey);
+            _query = await _distributedCache.GetRecordAsync<Bank_Tabelle[]>(_recordKey);
 
             if (_query is null)
             {
@@ -269,7 +269,7 @@ namespace Bank_DB_MVC_Redis_DC.Controllers
                 ViewBag.DataSource = _databaseSource;
                 _query = queryResult.ToArray();
 
-                await _distributedCache.SetRecordAsync(recordKey, _query);
+                await _distributedCache.SetRecordAsync(_recordKey, _query);
             }
 
             else
@@ -292,11 +292,11 @@ namespace Bank_DB_MVC_Redis_DC.Controllers
 
             _query = null;
 
-            string recordKey = "PLZquery_" + PLZ.ToString() + "_" + DateTime.Now.ToString("yyyyMMdd_hh");
+            //string recordKey = "PLZquery_" + PLZ.ToString() + "_" + DateTime.Now.ToString("yyyyMMdd_hh");
 
-            //_recordKey = "PLZquery_" + PLZ.ToString() + "_" + DateTime.Now.ToString("yyyyMMdd_hh");
+            _recordKey = "PLZquery_" + PLZ.ToString() + "_" + DateTime.Now.ToString("yyyyMMdd_hh");
 
-            _query = await _distributedCache.GetRecordAsync<Bank_Tabelle[]>(recordKey);
+            _query = await _distributedCache.GetRecordAsync<Bank_Tabelle[]>(_recordKey);
 
             if (_query is null)
             {
@@ -308,7 +308,7 @@ namespace Bank_DB_MVC_Redis_DC.Controllers
                 ViewBag.DataSource = _databaseSource;
                 _query = queryResult.ToArray();
 
-                await _distributedCache.SetRecordAsync(recordKey, _query);
+                await _distributedCache.SetRecordAsync(_recordKey, _query);
             }
 
             else
@@ -331,11 +331,11 @@ namespace Bank_DB_MVC_Redis_DC.Controllers
 
             _query = null;
 
-            string recordKey = "OrtQuery_" + ort + "_" + DateTime.Now.ToString("yyyyMMdd_hh");
+            //string recordKey = "OrtQuery_" + ort + "_" + DateTime.Now.ToString("yyyyMMdd_hh");
 
-            //_recordKey = "OrtQuery_" + ort + "_" + DateTime.Now.ToString("yyyyMMdd_hh");
+            _recordKey = "OrtQuery_" + ort + "_" + DateTime.Now.ToString("yyyyMMdd_hh");
 
-            _query = await _distributedCache.GetRecordAsync<Bank_Tabelle[]>(recordKey);
+            _query = await _distributedCache.GetRecordAsync<Bank_Tabelle[]>(_recordKey);
 
             if (_query is null)
             {
@@ -347,7 +347,7 @@ namespace Bank_DB_MVC_Redis_DC.Controllers
                 ViewBag.DataSource = _databaseSource;
                 _query = queryResult.ToArray();
 
-                await _distributedCache.SetRecordAsync(recordKey, _query);
+                await _distributedCache.SetRecordAsync(_recordKey, _query);
             }
 
             else
@@ -370,11 +370,11 @@ namespace Bank_DB_MVC_Redis_DC.Controllers
 
             _query = null;
 
-            string recordKey = "BLZquery_" + BLZ + "_" + DateTime.Now.ToString("yyyyMMdd_hh");
+            //string recordKey = "BLZquery_" + BLZ + "_" + DateTime.Now.ToString("yyyyMMdd_hh");
 
-            //_recordKey = "BLZquery_" + BLZ + "_" + DateTime.Now.ToString("yyyyMMdd_hh");
+            _recordKey = "BLZquery_" + BLZ + "_" + DateTime.Now.ToString("yyyyMMdd_hh");
 
-            _query = await _distributedCache.GetRecordAsync<Bank_Tabelle[]>(recordKey);
+            _query = await _distributedCache.GetRecordAsync<Bank_Tabelle[]>(_recordKey);
 
             if (_query is null)
             {
@@ -386,7 +386,7 @@ namespace Bank_DB_MVC_Redis_DC.Controllers
                 ViewBag.DataSource = _databaseSource;
                 _query = queryResult.ToArray();
 
-                await _distributedCache.SetRecordAsync(recordKey, _query);
+                await _distributedCache.SetRecordAsync(_recordKey, _query);
             }
 
             else
@@ -409,11 +409,11 @@ namespace Bank_DB_MVC_Redis_DC.Controllers
 
             _query = null;
 
-            string recordKey = "BICquery_" + BIC + "_" + DateTime.Now.ToString("yyyyMMdd_hh");
+            //string recordKey = "BICquery_" + BIC + "_" + DateTime.Now.ToString("yyyyMMdd_hh");
 
-            //_recordKey = "BICquery_" + BIC + "_" + DateTime.Now.ToString("yyyyMMdd_hh");
+            _recordKey = "BICquery_" + BIC + "_" + DateTime.Now.ToString("yyyyMMdd_hh");
 
-            _query = await _distributedCache.GetRecordAsync<Bank_Tabelle[]>(recordKey);
+            _query = await _distributedCache.GetRecordAsync<Bank_Tabelle[]>(_recordKey);
 
             if (_query is null)
             {
@@ -425,7 +425,7 @@ namespace Bank_DB_MVC_Redis_DC.Controllers
                 ViewBag.DataSource = _databaseSource;
                 _query = queryResult.ToArray();
 
-                await _distributedCache.SetRecordAsync(recordKey, _query);
+                await _distributedCache.SetRecordAsync(_recordKey, _query);
             }
 
             else

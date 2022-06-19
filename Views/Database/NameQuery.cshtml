@@ -25,4 +25,16 @@
         </tr>
     }
 
+    @if (ViewBag.QueryResult.Length >= 10)
+    {
+        <tr>
+            <th>Bezeichnung</th>
+            <th>Postleitzahl</th>
+            <th>Ort</th>
+            <th>Bankleitzahl</th>
+            <th>BIC</th>
+            <th>Kurzbezeichnung</th>
+        </tr>
+    }
+
 </table>
