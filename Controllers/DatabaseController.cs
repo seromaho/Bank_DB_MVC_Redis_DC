@@ -49,7 +49,7 @@ namespace Bank_DB_MVC_Redis_DC.Controllers
 
                 if (queryResult.Count() == 0)
                 {
-                    FileStream fileStream = new FileStream(Path.Combine(Directory.GetCurrentDirectory(),"Data", "Bank_DB", "Bank_Tabelle-w-o-PK.json"), FileMode.OpenOrCreate);
+                    FileStream fileStream = new FileStream(Path.Combine(Directory.GetCurrentDirectory(), "Data", "Bank_DB", "Bank_Tabelle-w-o-PK.json"), FileMode.OpenOrCreate);
                     StreamReader streamReader = new StreamReader(fileStream);
 
                     IEnumerable<Bank_Tabelle> jsonData = JsonSerializer.Deserialize<IEnumerable<Bank_Tabelle>>(streamReader.ReadToEnd());
@@ -57,21 +57,18 @@ namespace Bank_DB_MVC_Redis_DC.Controllers
                     streamReader.Close();
                     fileStream.Close();
 
-                    using (_context)
+                    foreach (Bank_Tabelle dataSet in jsonData)
                     {
-                        foreach (Bank_Tabelle dataSet in jsonData)
-                        {
-                            _context.Add(dataSet);
-                        }
-
-                        // doesn't work with Entity Framework Core ???
-                        //_context.Database.ExecuteSqlRaw(@"SET IDENTITY_INSERT [Bank_Tabelle] ON");
-
-                        _context.SaveChanges();
-
-                        // doesn't work with Entity Framework Core ???
-                        //_context.Database.ExecuteSqlRaw(@"SET IDENTITY_INSERT [Bank_Tabelle] OFF");
+                        _context.Add(dataSet);
                     }
+
+                    // doesn't work with Entity Framework Core ???
+                    //_context.Database.ExecuteSqlRaw(@"SET IDENTITY_INSERT [Bank_Tabelle] ON");
+
+                    _context.SaveChanges();
+
+                    // doesn't work with Entity Framework Core ???
+                    //_context.Database.ExecuteSqlRaw(@"SET IDENTITY_INSERT [Bank_Tabelle] OFF");
 
                     //ViewBag.QueryResult = jsonData.ToArray();
                     //ViewBag.DataSource = _databaseSource;
@@ -128,21 +125,18 @@ namespace Bank_DB_MVC_Redis_DC.Controllers
                     streamReader.Close();
                     fileStream.Close();
 
-                    using (_context)
+                    foreach (Bank_Tabelle dataSet in jsonData)
                     {
-                        foreach (Bank_Tabelle dataSet in jsonData)
-                        {
-                            _context.Add(dataSet);
-                        }
-
-                        // doesn't work with Entity Framework Core ???
-                        //_context.Database.ExecuteSqlRaw(@"SET IDENTITY_INSERT [Bank_Tabelle] ON");
-
-                        _context.SaveChanges();
-
-                        // doesn't work with Entity Framework Core ???
-                        //_context.Database.ExecuteSqlRaw(@"SET IDENTITY_INSERT [Bank_Tabelle] OFF");
+                        _context.Add(dataSet);
                     }
+
+                    // doesn't work with Entity Framework Core ???
+                    //_context.Database.ExecuteSqlRaw(@"SET IDENTITY_INSERT [Bank_Tabelle] ON");
+
+                    _context.SaveChanges();
+
+                    // doesn't work with Entity Framework Core ???
+                    //_context.Database.ExecuteSqlRaw(@"SET IDENTITY_INSERT [Bank_Tabelle] OFF");
 
                     ViewBag.QueryResult = jsonData.ToArray();
                     ViewBag.DataSource = _databaseSource;
@@ -200,21 +194,18 @@ namespace Bank_DB_MVC_Redis_DC.Controllers
                     streamReader.Close();
                     fileStream.Close();
 
-                    using (_context)
+                    foreach (Bank_Tabelle dataSet in jsonData)
                     {
-                        foreach (Bank_Tabelle dataSet in jsonData)
-                        {
-                            _context.Add(dataSet);
-                        }
-
-                        // doesn't work with Entity Framework Core ???
-                        //_context.Database.ExecuteSqlRaw(@"SET IDENTITY_INSERT [Bank_Tabelle] ON");
-
-                        _context.SaveChanges();
-
-                        // doesn't work with Entity Framework Core ???
-                        //_context.Database.ExecuteSqlRaw(@"SET IDENTITY_INSERT [Bank_Tabelle] OFF");
+                        _context.Add(dataSet);
                     }
+
+                    // doesn't work with Entity Framework Core ???
+                    //_context.Database.ExecuteSqlRaw(@"SET IDENTITY_INSERT [Bank_Tabelle] ON");
+
+                    _context.SaveChanges();
+
+                    // doesn't work with Entity Framework Core ???
+                    //_context.Database.ExecuteSqlRaw(@"SET IDENTITY_INSERT [Bank_Tabelle] OFF");
 
                     ViewBag.QueryResult = jsonData.ToArray();
                     ViewBag.DataSource = _databaseSource;
