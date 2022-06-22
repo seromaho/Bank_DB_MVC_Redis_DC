@@ -22,8 +22,8 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Database" asp-action="QueryPage">Query Database</a>
                         </li>
                         @*<li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Database" asp-action="Seed">Seed Database</a>
-                        </li>*@
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Database" asp-action="Seed">Seed Database</a>
+                            </li>*@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Database" asp-action="Privacy">Privacy</a>
                         </li>
@@ -59,18 +59,20 @@
         <div class="container">
             &copy; 2022 - Bank_DB MVC -
             <a asp-area="" asp-controller="Database" asp-action="Database">View Database</a> -
-            <a asp-area="" asp-controller="Database" asp-action="QueryPage">Query Database</a> -
-            @*<a asp-area="" asp-controller="Database" asp-action="Seed">Seed Database</a> -*@
-            <a asp-area="" asp-controller="Database" asp-action="Privacy">Privacy</a>
-            @*<environment include="Development">
-                <span> - NUM of Controller instances: @ViewBag.ControllerInstanceCounter</span>
-                <span> - NUM of Context instances: @ViewBag.ContextInstanceCounter</span>*@
-            @if (ViewBag.QueryResult != null)
-            {
-                <span> - Query Result(s) = @ViewBag.QueryResult.Length</span>
-            }
-            <span> - @ViewBag.DataSource@ViewBag.Stopwatch</span>
-            @*</environment>*@
+            <div class="d-none d-md-inline-block">
+                <a asp-area="" asp-controller="Database" asp-action="QueryPage">Query Database</a> -
+                @*<a asp-area="" asp-controller="Database" asp-action="Seed">Seed Database</a> -*@
+                <a asp-area="" asp-controller="Database" asp-action="Privacy">Privacy</a>
+                @*<environment include="Development">
+                    <span> - NUM of Controller instances: @ViewBag.ControllerInstanceCounter</span>
+                    <span> - NUM of Context instances: @ViewBag.ContextInstanceCounter</span>*@
+                @if (ViewBag.QueryResult != null)
+                {
+                    <span> - Query Result(s) = @ViewBag.QueryResult.Length</span>
+                }
+                <span> - @ViewBag.DataSource@ViewBag.Stopwatch</span>
+                @*</environment>*@
+            </div>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
