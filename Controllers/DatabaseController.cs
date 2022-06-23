@@ -165,7 +165,7 @@ namespace Bank_DB_MVC_Redis_DC.Controllers
             ViewBag.Stopwatch = " in " + stopwatch.ElapsedMilliseconds.ToString() + " ms";
             ViewBag.ControllerInstanceCounter = _instanceCounter.ToString();
             ViewBag.ContextInstanceCounter = Bank_DB_Context.instanceCounter.ToString();
-            return View();
+            return View("QueryResult");
         }
 
         public async Task<IActionResult> DatabaseAsync()
@@ -234,7 +234,7 @@ namespace Bank_DB_MVC_Redis_DC.Controllers
             ViewBag.Stopwatch = " in " + stopwatch.ElapsedMilliseconds.ToString() + " ms";
             ViewBag.ControllerInstanceCounter = _instanceCounter.ToString();
             ViewBag.ContextInstanceCounter = Bank_DB_Context.instanceCounter.ToString();
-            return View();
+            return View("QueryResult");
         }
 
         [HttpPost]
@@ -273,7 +273,7 @@ namespace Bank_DB_MVC_Redis_DC.Controllers
             ViewBag.Stopwatch = " in " + stopwatch.ElapsedMilliseconds.ToString() + " ms";
             ViewBag.ControllerInstanceCounter = _instanceCounter.ToString();
             ViewBag.ContextInstanceCounter = Bank_DB_Context.instanceCounter.ToString();
-            return View();
+            return View("QueryResult");
         }
 
         [HttpPost]
@@ -312,7 +312,7 @@ namespace Bank_DB_MVC_Redis_DC.Controllers
             ViewBag.Stopwatch = " in " + stopwatch.ElapsedMilliseconds.ToString() + " ms";
             ViewBag.ControllerInstanceCounter = _instanceCounter.ToString();
             ViewBag.ContextInstanceCounter = Bank_DB_Context.instanceCounter.ToString();
-            return View();
+            return View("QueryResult");
         }
 
         [HttpPost]
@@ -351,7 +351,7 @@ namespace Bank_DB_MVC_Redis_DC.Controllers
             ViewBag.Stopwatch = " in " + stopwatch.ElapsedMilliseconds.ToString() + " ms";
             ViewBag.ControllerInstanceCounter = _instanceCounter.ToString();
             ViewBag.ContextInstanceCounter = Bank_DB_Context.instanceCounter.ToString();
-            return View();
+            return View("QueryResult");
         }
 
         [HttpPost]
@@ -390,7 +390,7 @@ namespace Bank_DB_MVC_Redis_DC.Controllers
             ViewBag.Stopwatch = " in " + stopwatch.ElapsedMilliseconds.ToString() + " ms";
             ViewBag.ControllerInstanceCounter = _instanceCounter.ToString();
             ViewBag.ContextInstanceCounter = Bank_DB_Context.instanceCounter.ToString();
-            return View();
+            return View("QueryResult");
         }
 
         [HttpPost]
@@ -429,7 +429,7 @@ namespace Bank_DB_MVC_Redis_DC.Controllers
             ViewBag.Stopwatch = " in " + stopwatch.ElapsedMilliseconds.ToString() + " ms";
             ViewBag.ControllerInstanceCounter = _instanceCounter.ToString();
             ViewBag.ContextInstanceCounter = Bank_DB_Context.instanceCounter.ToString();
-            return View();
+            return View("QueryResult");
         }
 
         public IActionResult Privacy()
